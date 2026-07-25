@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Inventory Barcode Scanner</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- QuaggaJS for barcode scanning -->
+    <script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📦 Inventory Scanner</h1>
+            <p class="subtitle">Pindai Barcode untuk Manajemen Barang</p>
+        </header>
+
+        <!-- Scanner Section -->
+        <section class="scanner-section">
+            <div class="scanner-container">
+                <div id="scanner-viewport"></div>
+                <div class="scanner-overlay">
+                    <div class="scan-line"></div>
+                </div>
+                <div class="scanner-controls">
+                    <button id="startScannerBtn" class="btn btn-primary">
+                        <span id="scannerBtnIcon">▶</span> <span id="scannerBtnText">Mulai Scanner</span>
+                    </button>
+                    <div class="barcode-manual">
+                        <input type="text" id="manualBarcode" placeholder="Atau masukkan barcode manual..." maxlength="50">
+                        <button id="searchBarcodeBtn" class="btn btn-secondary">Cari</button>
+                    </div>
+                </div>
+            </div>
+            <div id="scanResult" class="scan-result hidden">
+                <div class="result-header">
+                    <span class="result-label">Barcode Terdeteksi:</span>
+                    <span id="scannedBarcode" class="result-barcode"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add/Edit Form -->
+        <section class="form-section">
+            <h2 id="formTitle">Tambah Barang Baru</h2>
+            <form id="itemForm">
+                <input type="hidden" id="itemId" value="">
+                <div class="form-group">
+                    <label for="barcode">Barcode *</label>
+                    <input type="text" id="barcode" required readonly placeholder="Scan barcode terlebih dahulu">
+                </div>
+                <div class="form-group">
+                    <label for="itemName">Nama Barang *</label>
+                    <input type="text" id="itemName" required placeholder="Masukkan nama barang">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quantity">Jumlah</label>
+                        <input type="number" id="quantity" min="0" value="1" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Harga (Rp)</label>
+                        <input type="number" id="price" min="0" step="500" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="category">Kategori</label>
+                    <select id="category">
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="Makanan & Minuman">Makanan & Minuman</option>
+                        <option value="Elektronik">Elektronik</option>
+                        <option value="Pakaian">Pakaian</option>
+                        <option value="Alat Rumah Tangga">Alat Rumah Tangga</option>
+                        <option value="Kesehatan & Kecantikan">Kesehatan & Kecantikan</option>
+                        <option value="ATK & Kantor">ATK & Kantor</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Deskripsi</label>
+                    <textarea id="description" rows="2" placeholder="Deskripsi barang (opsional)"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="submitBtn" class="btn btn-success">💾 Simpan Barang</button>
+                    <button type="button" id="resetBtn" class="btn btn-danger">↺ Reset</button>
+                </div>
+                <p id="formMessage" class="form-message hidden"></p>
+            </form>
+        </section>
+
+        <!-- Items List -->
+        <section class="items-section">
+            <h2>📋 Daftar Barang</h2>
+            <div class="search-bar">
+                <input type="text" id="searchItems" placeholder="Cari barang atau barcode...">
+                <button id="searchBtn" class="btn btn-secondary">🔍</button>
+            </div>
+            <div id="itemsContainer">
+                <div class="loading">Memuat data...</div>
+            </div>
+            <div id="pagination" class="pagination"></div>
+        </section>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>
+
